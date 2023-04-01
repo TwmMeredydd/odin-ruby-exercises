@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def caesar_cipher(message, shift)
   shifted = message.bytes.map do |c|
     if (c >= 65 && c <= 91) || (c >= 97 && c <= 122)
