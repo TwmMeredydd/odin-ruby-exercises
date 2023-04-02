@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'grid'
 
 class Game
-
-  @@players = ['X', 'O']
+  PLAYERS = %w[X O].freeze
 
   def initialize
     @player_num = 0
@@ -10,39 +11,38 @@ class Game
     game_loop
   end
 
-  def get_coord
-    while true do
-        begin
-          coord = gets.chomp.to_i
-        rescue => exception
-          puts "Invalid input: should be an integer from 1 -> 3 inclusive"
-        else
-          return coord-1 if coord >= 1 && coord <= 3
-          puts "Invalid input: should be an integer from 1 -> 3 inclusive"
-        end
+  def input_coord
+    loop do
+      begin
+        coord = gets.chomp.to_i
+      rescue => e
+        puts 'Invalid input: should be an integer from 1 -> 3 inclusive'
+      else
+        return coord - 1 if coord >= 1 && coord <= 3
+
+        puts 'Invalid input: should be an integer from 1 -> 3 inclusive'
+      end
     end
   end
 
   def player
-    @@players[@player_num]
+    PLAYERS[@player_num]
   end
 
   def game_loop
     @board.display
-    while true do
+    loop do
       puts "Player #{player}'s turn."
-
-      while true do
+      row = col = 0
+      loop do
         puts 'Enter row to mark (1 -> 3):'
-        row = get_coord
+        row = input_coord
         puts 'Enter column to mark (1 -> 3):'
-        col = get_coord
+        col = input_coord
 
-        if @board.occupied?(row, col)
-          break
-        else
-          puts 'Position taken already!'
-        end
+        break if @board.occupied?(row, col)
+
+        puts 'Position taken already!'
       end
 
       @board.mark(row, col, player)
@@ -60,3 +60,5 @@ class Game
     end
   end
 end
+
+g = Game.new
