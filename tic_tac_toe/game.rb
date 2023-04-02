@@ -13,15 +13,10 @@ class Game
 
   def input_coord
     loop do
-      begin
-        coord = gets.chomp.to_i
-      rescue => e
-        puts 'Invalid input: should be an integer from 1 -> 3 inclusive'
-      else
-        return coord - 1 if coord >= 1 && coord <= 3
+      coord = gets.chomp.to_i
+      return coord - 1 if coord >= 1 && coord <= 3
 
-        puts 'Invalid input: should be an integer from 1 -> 3 inclusive'
-      end
+      puts 'Invalid input: should be an integer from 1 -> 3 inclusive'
     end
   end
 
