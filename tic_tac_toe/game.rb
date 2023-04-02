@@ -3,11 +3,14 @@
 require_relative 'grid'
 
 class Game
+  attr_reader :result
+  
   PLAYERS = %w[X O].freeze
 
   def initialize
     @player_num = 0
     @board = Grid.new
+    @result = 'D'
     game_loop
   end
 
@@ -45,15 +48,14 @@ class Game
 
       if @board.check_win?(player, row, col)
         puts "Player #{player} wins!"
-        return player
+        @result = player
+        break
       elsif @board.filled?
         puts 'It\'s a draw!'
-        return 'D'
+        break
       end
 
       @player_num = (@player_num + 1) % 2
     end
   end
 end
-
-g = Game.new
